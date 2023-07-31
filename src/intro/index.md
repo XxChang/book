@@ -38,6 +38,7 @@
 | Rust, 嵌入式 | [Embedded Rust Bookshelf](https://docs.rust-embedded.org) | 这里你能找到许多Rust's Embedded Working Group提供的额外资源。|
 | Rust, 嵌入式 | [Embedonomicon](https://docs.rust-embedded.org/embedonomicon/) | 在Rust中进行嵌入式编程的细节。 |
 | Rust, 嵌入式 | [embedded FAQ](https://docs.rust-embedded.org/faq.html) | 关于嵌入式环境下的Rust会遇到的常见问题。|
+| Rust, 嵌入式 | [Comprehensive Rust 🦀: Bare Metal](https://google.github.io/comprehensive-rust/bare-metal.html) | 为期一天的裸机Rust开发课程教材。 |
 | 中断 | [Interrupt](https://en.wikipedia.org/wiki/Interrupt) | - |
 | 存储映射的IO/外设 | [Memory-mapped I/O](https://en.wikipedia.org/wiki/Memory-mapped_I/O) | - |
 | SPI, UART, RS232, USB, I2C, TTL | [Stack Exchange about SPI, UART, and other interfaces](https://electronics.stackexchange.com/questions/37814/usart-uart-rs232-usb-spi-i2c-ttl-etc-what-are-all-of-these-and-how-do-th) | - |
