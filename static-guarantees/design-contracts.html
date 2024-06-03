@@ -1,0 +1,465 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>设计约定 - The Embedded Rust Book</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../intro/index.html"><strong aria-hidden="true">1.</strong> 引言</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../intro/hardware.html"><strong aria-hidden="true">1.1.</strong> 硬件</a></li><li class="chapter-item expanded "><a href="../intro/no-std.html"><strong aria-hidden="true">1.2.</strong> no_std</a></li><li class="chapter-item expanded "><a href="../intro/tooling.html"><strong aria-hidden="true">1.3.</strong> 工具</a></li><li class="chapter-item expanded "><a href="../intro/install.html"><strong aria-hidden="true">1.4.</strong> 安装</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../intro/install/linux.html"><strong aria-hidden="true">1.4.1.</strong> Linux</a></li><li class="chapter-item expanded "><a href="../intro/install/macos.html"><strong aria-hidden="true">1.4.2.</strong> MacOS</a></li><li class="chapter-item expanded "><a href="../intro/install/windows.html"><strong aria-hidden="true">1.4.3.</strong> Windows</a></li><li class="chapter-item expanded "><a href="../intro/install/verify.html"><strong aria-hidden="true">1.4.4.</strong> 验证工具链的安装</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../start/index.html"><strong aria-hidden="true">2.</strong> 开始</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../start/qemu.html"><strong aria-hidden="true">2.1.</strong> QEMU</a></li><li class="chapter-item expanded "><a href="../start/hardware.html"><strong aria-hidden="true">2.2.</strong> 硬件</a></li><li class="chapter-item expanded "><a href="../start/registers.html"><strong aria-hidden="true">2.3.</strong> 存储映射的寄存器</a></li><li class="chapter-item expanded "><a href="../start/semihosting.html"><strong aria-hidden="true">2.4.</strong> 半主机模式</a></li><li class="chapter-item expanded "><a href="../start/panicking.html"><strong aria-hidden="true">2.5.</strong> 运行时恐慌(Panicking)</a></li><li class="chapter-item expanded "><a href="../start/exceptions.html"><strong aria-hidden="true">2.6.</strong> 异常</a></li><li class="chapter-item expanded "><a href="../start/interrupts.html"><strong aria-hidden="true">2.7.</strong> 中断</a></li><li class="chapter-item expanded "><a href="../start/io.html"><strong aria-hidden="true">2.8.</strong> IO</a></li></ol></li><li class="chapter-item expanded "><a href="../peripherals/index.html"><strong aria-hidden="true">3.</strong> 外设</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../peripherals/a-first-attempt.html"><strong aria-hidden="true">3.1.</strong> Rust尝鲜</a></li><li class="chapter-item expanded "><a href="../peripherals/borrowck.html"><strong aria-hidden="true">3.2.</strong> 借用检查器</a></li><li class="chapter-item expanded "><a href="../peripherals/singletons.html"><strong aria-hidden="true">3.3.</strong> 单例</a></li></ol></li><li class="chapter-item expanded "><a href="../static-guarantees/index.html"><strong aria-hidden="true">4.</strong> 静态保障(static guarantees)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../static-guarantees/typestate-programming.html"><strong aria-hidden="true">4.1.</strong> 类型状态编程</a></li><li class="chapter-item expanded "><a href="../static-guarantees/state-machines.html"><strong aria-hidden="true">4.2.</strong> 把外设当作状态机</a></li><li class="chapter-item expanded "><a href="../static-guarantees/design-contracts.html" class="active"><strong aria-hidden="true">4.3.</strong> 设计约定</a></li><li class="chapter-item expanded "><a href="../static-guarantees/zero-cost-abstractions.html"><strong aria-hidden="true">4.4.</strong> 零成本抽象</a></li></ol></li><li class="chapter-item expanded "><a href="../portability/index.html"><strong aria-hidden="true">5.</strong> 可移植性</a></li><li class="chapter-item expanded "><a href="../concurrency/index.html"><strong aria-hidden="true">6.</strong> 并发</a></li><li class="chapter-item expanded "><a href="../collections/index.html"><strong aria-hidden="true">7.</strong> 容器</a></li><li class="chapter-item expanded "><a href="../design-patterns/index.html"><strong aria-hidden="true">8.</strong> 设计模式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../design-patterns/hal/index.html"><strong aria-hidden="true">8.1.</strong> HALs</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../design-patterns/hal/checklist.html"><strong aria-hidden="true">8.1.1.</strong> 列表</a></li><li class="chapter-item expanded "><a href="../design-patterns/hal/naming.html"><strong aria-hidden="true">8.1.2.</strong> 命名</a></li><li class="chapter-item expanded "><a href="../design-patterns/hal/interoperability.html"><strong aria-hidden="true">8.1.3.</strong> 互操性</a></li><li class="chapter-item expanded "><a href="../design-patterns/hal/predictability.html"><strong aria-hidden="true">8.1.4.</strong> 可预见性</a></li><li class="chapter-item expanded "><a href="../design-patterns/hal/gpio.html"><strong aria-hidden="true">8.1.5.</strong> GPIO</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../c-tips/index.html"><strong aria-hidden="true">9.</strong> 给嵌入式C开发者的贴士</a></li><li class="chapter-item expanded "><a href="../interoperability/index.html"><strong aria-hidden="true">10.</strong> 互操性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../interoperability/c-with-rust.html"><strong aria-hidden="true">10.1.</strong> 使用C的Rust</a></li><li class="chapter-item expanded "><a href="../interoperability/rust-with-c.html"><strong aria-hidden="true">10.2.</strong> 使用Rust的C</a></li></ol></li><li class="chapter-item expanded "><a href="../unsorted/index.html"><strong aria-hidden="true">11.</strong> 没有排序的主题</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../unsorted/speed-vs-size.html"><strong aria-hidden="true">11.1.</strong> 优化: 速度与大小间的博弈</a></li><li class="chapter-item expanded "><a href="../unsorted/math.html"><strong aria-hidden="true">11.2.</strong> 执行数学运算</a></li></ol></li><li class="chapter-item expanded "><li class="spacer"></li><li class="chapter-item expanded affix "><a href="../appendix/glossary.html">附录A: 词汇表</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Embedded Rust Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/xxchang/book" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="设计约定design-contracts"><a class="header" href="#设计约定design-contracts">设计约定(design contracts)</a></h1>
+<p>在我们的上个章节中，我们写了一个接口，但没有强制遵守设计约定。让我们再看下我们假想的GPIO配置寄存器：</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: right">名字</th><th style="text-align: right">位数(s)</th><th style="text-align: right">值</th><th style="text-align: right">含义</th><th style="text-align: right">注释</th></tr></thead><tbody>
+<tr><td style="text-align: right">使能</td><td style="text-align: right">0</td><td style="text-align: right">0</td><td style="text-align: right">关闭</td><td style="text-align: right">关闭GPIO</td></tr>
+<tr><td style="text-align: right"></td><td style="text-align: right"></td><td style="text-align: right">1</td><td style="text-align: right">使能</td><td style="text-align: right">使能GPIO</td></tr>
+<tr><td style="text-align: right">方向</td><td style="text-align: right">1</td><td style="text-align: right">0</td><td style="text-align: right">输入</td><td style="text-align: right">方向设置成输入</td></tr>
+<tr><td style="text-align: right"></td><td style="text-align: right"></td><td style="text-align: right">1</td><td style="text-align: right">输出</td><td style="text-align: right">方向设置成输出</td></tr>
+<tr><td style="text-align: right">输入模式</td><td style="text-align: right">2..3</td><td style="text-align: right">00</td><td style="text-align: right">高阻态</td><td style="text-align: right">输入设置为高阻态</td></tr>
+<tr><td style="text-align: right"></td><td style="text-align: right"></td><td style="text-align: right">01</td><td style="text-align: right">下拉</td><td style="text-align: right">下拉输入管脚</td></tr>
+<tr><td style="text-align: right"></td><td style="text-align: right"></td><td style="text-align: right">10</td><td style="text-align: right">上拉</td><td style="text-align: right">上拉输入管脚</td></tr>
+<tr><td style="text-align: right"></td><td style="text-align: right"></td><td style="text-align: right">11</td><td style="text-align: right">n/a</td><td style="text-align: right">无效状态。不要设置</td></tr>
+<tr><td style="text-align: right">输出模式</td><td style="text-align: right">4</td><td style="text-align: right">0</td><td style="text-align: right">拉低</td><td style="text-align: right">把管脚设置成低电平</td></tr>
+<tr><td style="text-align: right"></td><td style="text-align: right"></td><td style="text-align: right">1</td><td style="text-align: right">拉高</td><td style="text-align: right">把管脚设置成高电平</td></tr>
+<tr><td style="text-align: right">输入状态</td><td style="text-align: right">5</td><td style="text-align: right">x</td><td style="text-align: right">输入电平</td><td style="text-align: right">如果输入 &lt; 1.5v 为0，如果输入 &gt;= 1.5v 为1</td></tr>
+</tbody></table>
+</div>
+<p>如果在使用底层硬件之前检查硬件的状态，在运行时强制用户遵守设计约定，代码可能像这一样:</p>
+<pre><code class="language-rust ignore">/// GPIO接口
+struct GpioConfig {
+    /// 由svd2rust生成的GPIO配制结构体
+    periph: GPIO_CONFIG,
+}
+
+impl GpioConfig {
+    pub fn set_enable(&amp;mut self, is_enabled: bool) {
+        self.periph.modify(|_r, w| {
+            w.enable().set_bit(is_enabled)
+        });
+    }
+
+    pub fn set_direction(&amp;mut self, is_output: bool) -&gt; Result&lt;(), ()&gt; {
+        if self.periph.read().enable().bit_is_clear() {
+            // 必须被使能配置方向
+            return Err(());
+        }
+
+        self.periph.modify(|r, w| {
+            w.direction().set_bit(is_output)
+        });
+
+        Ok(())
+    }
+
+    pub fn set_input_mode(&amp;mut self, variant: InputMode) -&gt; Result&lt;(), ()&gt; {
+        if self.periph.read().enable().bit_is_clear() {
+            // 必须被使能配置输入模式
+            return Err(());
+        }
+
+        if self.periph.read().direction().bit_is_set() {
+            // 方向必须被设置成输入
+            return Err(());
+        }
+
+        self.periph.modify(|_r, w| {
+            w.input_mode().variant(variant)
+        });
+
+        Ok(())
+    }
+
+    pub fn set_output_status(&amp;mut self, is_high: bool) -&gt; Result&lt;(), ()&gt; {
+        if self.periph.read().enable().bit_is_clear() {
+            // 设置输出状态必须被使能
+            return Err(());
+        }
+
+        if self.periph.read().direction().bit_is_clear() {
+            // 方向必须是输出
+            return Err(());
+        }
+
+        self.periph.modify(|_r, w| {
+            w.output_mode.set_bit(is_high)
+        });
+
+        Ok(())
+    }
+
+    pub fn get_input_status(&amp;self) -&gt; Result&lt;bool, ()&gt; {
+        if self.periph.read().enable().bit_is_clear() {
+            // 获取状态必须被使能
+            return Err(());
+        }
+
+        if self.periph.read().direction().bit_is_set() {
+            // 方向必须是输入
+            return Err(());
+        }
+
+        Ok(self.periph.read().input_status().bit_is_set())
+    }
+}</code></pre>
+<p>因为需要强制遵守硬件上的限制，所以最后做了很多运行时检查，它浪费了我们很多时间和资源，对于开发者来说，这个代码用起来就没那么愉快了。</p>
+<h2 id="类型状态type-states"><a class="header" href="#类型状态type-states">类型状态(Type states)</a></h2>
+<p>但是，如果我们让Rust的类型系统去强制遵守状态转换的规则会怎样？看下这个例子:</p>
+<pre><code class="language-rust ignore">/// GPIO接口
+struct GpioConfig&lt;ENABLED, DIRECTION, MODE&gt; {
+    /// 由svd2rust产生的GPIO配置结构体
+    periph: GPIO_CONFIG,
+    enabled: ENABLED,
+    direction: DIRECTION,
+    mode: MODE,
+}
+
+// GpioConfig中MODE的类型状态
+struct Disabled;
+struct Enabled;
+struct Output;
+struct Input;
+struct PulledLow;
+struct PulledHigh;
+struct HighZ;
+struct DontCare;
+
+/// 这些函数可能被用于所有的GPIO管脚
+impl&lt;EN, DIR, IN_MODE&gt; GpioConfig&lt;EN, DIR, IN_MODE&gt; {
+    pub fn into_disabled(self) -&gt; GpioConfig&lt;Disabled, DontCare, DontCare&gt; {
+        self.periph.modify(|_r, w| w.enable.disabled());
+        GpioConfig {
+            periph: self.periph,
+            enabled: Disabled,
+            direction: DontCare,
+            mode: DontCare,
+        }
+    }
+
+    pub fn into_enabled_input(self) -&gt; GpioConfig&lt;Enabled, Input, HighZ&gt; {
+        self.periph.modify(|_r, w| {
+            w.enable.enabled()
+             .direction.input()
+             .input_mode.high_z()
+        });
+        GpioConfig {
+            periph: self.periph,
+            enabled: Enabled,
+            direction: Input,
+            mode: HighZ,
+        }
+    }
+
+    pub fn into_enabled_output(self) -&gt; GpioConfig&lt;Enabled, Output, DontCare&gt; {
+        self.periph.modify(|_r, w| {
+            w.enable.enabled()
+             .direction.output()
+             .input_mode.set_high()
+        });
+        GpioConfig {
+            periph: self.periph,
+            enabled: Enabled,
+            direction: Output,
+            mode: DontCare,
+        }
+    }
+}
+
+/// 这个函数可能被用于一个输出管脚
+impl GpioConfig&lt;Enabled, Output, DontCare&gt; {
+    pub fn set_bit(&amp;mut self, set_high: bool) {
+        self.periph.modify(|_r, w| w.output_mode.set_bit(set_high));
+    }
+}
+
+/// 这些方法可能被用于任意一个使能的输入GPIO
+impl&lt;IN_MODE&gt; GpioConfig&lt;Enabled, Input, IN_MODE&gt; {
+    pub fn bit_is_set(&amp;self) -&gt; bool {
+        self.periph.read().input_status.bit_is_set()
+    }
+
+    pub fn into_input_high_z(self) -&gt; GpioConfig&lt;Enabled, Input, HighZ&gt; {
+        self.periph.modify(|_r, w| w.input_mode().high_z());
+        GpioConfig {
+            periph: self.periph,
+            enabled: Enabled,
+            direction: Input,
+            mode: HighZ,
+        }
+    }
+
+    pub fn into_input_pull_down(self) -&gt; GpioConfig&lt;Enabled, Input, PulledLow&gt; {
+        self.periph.modify(|_r, w| w.input_mode().pull_low());
+        GpioConfig {
+            periph: self.periph,
+            enabled: Enabled,
+            direction: Input,
+            mode: PulledLow,
+        }
+    }
+
+    pub fn into_input_pull_up(self) -&gt; GpioConfig&lt;Enabled, Input, PulledHigh&gt; {
+        self.periph.modify(|_r, w| w.input_mode().pull_high());
+        GpioConfig {
+            periph: self.periph,
+            enabled: Enabled,
+            direction: Input,
+            mode: PulledHigh,
+        }
+    }
+}</code></pre>
+<p>现在让我们看下代码如何用这个API:</p>
+<pre><code class="language-rust ignore">/*
+ * 案例 1: 从未配置到高阻输入
+ */
+let pin: GpioConfig&lt;Disabled, _, _&gt; = get_gpio();
+
+// 不能这么做，pin没有被使能
+// pin.into_input_pull_down();
+
+// 现在把管脚从未配置变为高阻输入
+let input_pin = pin.into_enabled_input();
+
+// 从管脚读取
+let pin_state = input_pin.bit_is_set();
+
+// 不能这么做，输入管脚没有这个接口
+// input_pin.set_bit(true);
+
+/*
+ * 案例 2: 高阻输入到下拉输入
+ */
+let pulled_low = input_pin.into_input_pull_down();
+let pin_state = pulled_low.bit_is_set();
+
+/*
+ * 案例 3: 下拉输入到输出, 拉高
+ */
+let output_pin = pulled_low.into_enabled_output();
+output_pin.set_bit(true);
+
+// 不能这么做，输出管脚没有这个接口
+// output_pin.into_input_pull_down();</code></pre>
+<p>这绝对是存储管脚状态的便捷方法，但是为什么这么做?为什么这比把状态当成一个<code>enum</code>存在我们的<code>GpioConfig</code>结构体中更好？</p>
+<h2 id="编译时功能安全functional-safety"><a class="header" href="#编译时功能安全functional-safety">编译时功能安全(Functional Safety)</a></h2>
+<p>因为我们在编译时完全强制遵守设计约定，这造成了没有运行时开销。当管脚处于输入模式时时，是不可能设置输出模式的。必须先把它设置成一个输出管脚，然后再设置输出模式。因为在执行一个函数前会检查现在的状态，因此没有运行时消耗。</p>
+<p>也因为这些状态被类型系统强制遵守，因此没有为这个接口的使用者留太多的犯错余地。如果它们尝试执行一个非法的状态转换，代码将不会编译成功！</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../static-guarantees/state-machines.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../static-guarantees/zero-cost-abstractions.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../static-guarantees/state-machines.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../static-guarantees/zero-cost-abstractions.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

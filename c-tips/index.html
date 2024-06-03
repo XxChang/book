@@ -1,0 +1,449 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>给嵌入式C开发者的贴士 - The Embedded Rust Book</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../intro/index.html"><strong aria-hidden="true">1.</strong> 引言</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../intro/hardware.html"><strong aria-hidden="true">1.1.</strong> 硬件</a></li><li class="chapter-item expanded "><a href="../intro/no-std.html"><strong aria-hidden="true">1.2.</strong> no_std</a></li><li class="chapter-item expanded "><a href="../intro/tooling.html"><strong aria-hidden="true">1.3.</strong> 工具</a></li><li class="chapter-item expanded "><a href="../intro/install.html"><strong aria-hidden="true">1.4.</strong> 安装</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../intro/install/linux.html"><strong aria-hidden="true">1.4.1.</strong> Linux</a></li><li class="chapter-item expanded "><a href="../intro/install/macos.html"><strong aria-hidden="true">1.4.2.</strong> MacOS</a></li><li class="chapter-item expanded "><a href="../intro/install/windows.html"><strong aria-hidden="true">1.4.3.</strong> Windows</a></li><li class="chapter-item expanded "><a href="../intro/install/verify.html"><strong aria-hidden="true">1.4.4.</strong> 验证工具链的安装</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../start/index.html"><strong aria-hidden="true">2.</strong> 开始</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../start/qemu.html"><strong aria-hidden="true">2.1.</strong> QEMU</a></li><li class="chapter-item expanded "><a href="../start/hardware.html"><strong aria-hidden="true">2.2.</strong> 硬件</a></li><li class="chapter-item expanded "><a href="../start/registers.html"><strong aria-hidden="true">2.3.</strong> 存储映射的寄存器</a></li><li class="chapter-item expanded "><a href="../start/semihosting.html"><strong aria-hidden="true">2.4.</strong> 半主机模式</a></li><li class="chapter-item expanded "><a href="../start/panicking.html"><strong aria-hidden="true">2.5.</strong> 运行时恐慌(Panicking)</a></li><li class="chapter-item expanded "><a href="../start/exceptions.html"><strong aria-hidden="true">2.6.</strong> 异常</a></li><li class="chapter-item expanded "><a href="../start/interrupts.html"><strong aria-hidden="true">2.7.</strong> 中断</a></li><li class="chapter-item expanded "><a href="../start/io.html"><strong aria-hidden="true">2.8.</strong> IO</a></li></ol></li><li class="chapter-item expanded "><a href="../peripherals/index.html"><strong aria-hidden="true">3.</strong> 外设</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../peripherals/a-first-attempt.html"><strong aria-hidden="true">3.1.</strong> Rust尝鲜</a></li><li class="chapter-item expanded "><a href="../peripherals/borrowck.html"><strong aria-hidden="true">3.2.</strong> 借用检查器</a></li><li class="chapter-item expanded "><a href="../peripherals/singletons.html"><strong aria-hidden="true">3.3.</strong> 单例</a></li></ol></li><li class="chapter-item expanded "><a href="../static-guarantees/index.html"><strong aria-hidden="true">4.</strong> 静态保障(static guarantees)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../static-guarantees/typestate-programming.html"><strong aria-hidden="true">4.1.</strong> 类型状态编程</a></li><li class="chapter-item expanded "><a href="../static-guarantees/state-machines.html"><strong aria-hidden="true">4.2.</strong> 把外设当作状态机</a></li><li class="chapter-item expanded "><a href="../static-guarantees/design-contracts.html"><strong aria-hidden="true">4.3.</strong> 设计约定</a></li><li class="chapter-item expanded "><a href="../static-guarantees/zero-cost-abstractions.html"><strong aria-hidden="true">4.4.</strong> 零成本抽象</a></li></ol></li><li class="chapter-item expanded "><a href="../portability/index.html"><strong aria-hidden="true">5.</strong> 可移植性</a></li><li class="chapter-item expanded "><a href="../concurrency/index.html"><strong aria-hidden="true">6.</strong> 并发</a></li><li class="chapter-item expanded "><a href="../collections/index.html"><strong aria-hidden="true">7.</strong> 容器</a></li><li class="chapter-item expanded "><a href="../design-patterns/index.html"><strong aria-hidden="true">8.</strong> 设计模式</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../design-patterns/hal/index.html"><strong aria-hidden="true">8.1.</strong> HALs</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../design-patterns/hal/checklist.html"><strong aria-hidden="true">8.1.1.</strong> 列表</a></li><li class="chapter-item expanded "><a href="../design-patterns/hal/naming.html"><strong aria-hidden="true">8.1.2.</strong> 命名</a></li><li class="chapter-item expanded "><a href="../design-patterns/hal/interoperability.html"><strong aria-hidden="true">8.1.3.</strong> 互操性</a></li><li class="chapter-item expanded "><a href="../design-patterns/hal/predictability.html"><strong aria-hidden="true">8.1.4.</strong> 可预见性</a></li><li class="chapter-item expanded "><a href="../design-patterns/hal/gpio.html"><strong aria-hidden="true">8.1.5.</strong> GPIO</a></li></ol></li></ol></li><li class="chapter-item expanded "><a href="../c-tips/index.html" class="active"><strong aria-hidden="true">9.</strong> 给嵌入式C开发者的贴士</a></li><li class="chapter-item expanded "><a href="../interoperability/index.html"><strong aria-hidden="true">10.</strong> 互操性</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../interoperability/c-with-rust.html"><strong aria-hidden="true">10.1.</strong> 使用C的Rust</a></li><li class="chapter-item expanded "><a href="../interoperability/rust-with-c.html"><strong aria-hidden="true">10.2.</strong> 使用Rust的C</a></li></ol></li><li class="chapter-item expanded "><a href="../unsorted/index.html"><strong aria-hidden="true">11.</strong> 没有排序的主题</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../unsorted/speed-vs-size.html"><strong aria-hidden="true">11.1.</strong> 优化: 速度与大小间的博弈</a></li><li class="chapter-item expanded "><a href="../unsorted/math.html"><strong aria-hidden="true">11.2.</strong> 执行数学运算</a></li></ol></li><li class="chapter-item expanded "><li class="spacer"></li><li class="chapter-item expanded affix "><a href="../appendix/glossary.html">附录A: 词汇表</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Embedded Rust Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/xxchang/book" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="给嵌入式c开发者的贴士"><a class="header" href="#给嵌入式c开发者的贴士">给嵌入式C开发者的贴士</a></h1>
+<p>这个章节收集了可能对于刚开始编写Rust的，有经验的嵌入式C开发者来说，有用的各种各样的贴士。它将解释你在C中可能已经用到的那些东西与Rust中的有何不同。</p>
+<h2 id="预处理器"><a class="header" href="#预处理器">预处理器</a></h2>
+<p>在嵌入式C中，为了各种各样的目的使用预处理器是很常见的，比如:</p>
+<ul>
+<li>使用<code>#ifdef</code>编译时选择代码块</li>
+<li>编译时的数组大小和计算</li>
+<li>用来简化常见的模式的宏(避免调用函数的开销)</li>
+</ul>
+<p>在Rust中没有预处理器，所以许多案例有不同的处理方法。本章节剩下的部分，我们将介绍各种替代预处理器的方法。</p>
+<h3 id="编译时的代码选择"><a class="header" href="#编译时的代码选择">编译时的代码选择</a></h3>
+<p>Rust中最接近<code>#ifdef ... #endif</code>的是<a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-features-section">Cargo features</a>。这些比C预处理器更正式一点: 每个crate显式列举的，所有可能的features只能是关了的或者打开了的。当你把一个crate列为依赖项时，Features被打开，且是可添加的：如果你依赖树中的任何crate为另一个crate打开了一个feature，那么这个feature将为所有使用那个crate的用户而打开。</p>
+<p>比如，你可能有一个crate，其提供一个信号处理的基本类型库(library of signal processing primitives)。每个基本类型可能带来一些额外的时间去编译大量的常量，你想要避开这些常量。你可以为你的<code>Cargo.toml</code>中每个组件声明一个Cargo feature。</p>
+<pre><code class="language-toml">[features]
+FIR = []
+IIR = []
+</code></pre>
+<p>然后，在你的代码中，使用<code>#[cfg(feature="FIR")]</code>去控制要包含什么东西。</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// 在你的顶层的lib.rs中
+#[cfg(feature="FIR")]
+pub mod fir;
+
+#[cfg(feature="IIR")]
+pub mod iir;
+<span class="boring">}</span></code></pre></pre>
+<p>同样地，你可以控制，只有当某个feature <em>没有</em> 被打开时，包含代码块，或者某些features的组合被打开或者被关闭时。</p>
+<p>另外，Rust提供了许多可以使用的自动配置了的条件，比如<code>target_arch</code>用来选择不同的代码所基于的架构。对于条件编译的全部细节，可以参看the Rust reference的<a href="https://doc.rust-lang.org/reference/conditional-compilation.html">conditional compilation</a>章节。</p>
+<p>条件编译将只应用于下一条语句或者块。如果一个块不能在现在的作用域中被使用，那么<code>cfg</code>属性将需要被多次使用。值得注意的是大多数时间，仅是包含所有的代码而让编译器在优化时去删除死代码(dead code)更好，通常，在移除不使用的代码方面的工作，编译器做得很好。</p>
+<h3 id="编译时大小和计算"><a class="header" href="#编译时大小和计算">编译时大小和计算</a></h3>
+<p>Rust支持<code>const fn</code>，<code>const fn</code>是在编译时可以被计算的函数，因此可以被用在需要常量的地方，比如在数组的大小中。这个能与上述的features一起使用，比如:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>const fn array_size() -&gt; usize {
+    #[cfg(feature="use_more_ram")]
+    { 1024 }
+    #[cfg(not(feature="use_more_ram"))]
+    { 128 }
+}
+
+static BUF: [u32; array_size()] = [0u32; array_size()];
+<span class="boring">}</span></code></pre></pre>
+<p>这些对于stable版本的Rust来说是新的特性，从1.31开始引入，因此文档依然很少。在写这篇文章的时候<code>const fn</code>可用的功能也非常有限; 在未来的Rust release版本中，我们可以期望<code>const fn</code>将带来更多的功能。</p>
+<h3 id="宏"><a class="header" href="#宏">宏</a></h3>
+<p>Rust提供一个极度强大的<a href="https://doc.rust-lang.org/book/ch19-06-macros.html">宏系统</a>。虽然C预处理器几乎直接在你的源代码之上进行操作，但是Rust宏系统可以在一个更高的级别上操作。存在两种Rust宏: <em>声明宏</em> 和 <em>过程宏</em> 。前者更简单也最常见; 它们看起来像是函数调用，且能扩展成一个完整的表达式，语句，项，或者模式。过程宏更复杂但是却能让Rust更强大: 它们可以把任一条Rust语法变成一个新的Rust语法。</p>
+<p>通常，你可能想知道在那些使用一个C预处理器宏的地方，能否使用一个声明宏做同样的工作。你可以在crate中定义它们，且在你的crate中轻松使用它们或者导出给其他人用。但是请注意，因为它们必须扩展成完整的表达式，语句，项或者模式，因此C预处理器宏的某些用例没法用，比如可以扩展成一个变量名的一部分的宏或者可以把列表中的项扩展成不完整的集合的宏。</p>
+<p>和Cargo features一样，值得考虑下你是否真的需要宏。在一些例子中一个常规的函数更容易被理解，它也能被内联成和一个和宏一样的代码。<code>#[inline]</code>和<code>#[inline(always)]</code> <a href="https://doc.rust-lang.org/reference/attributes.html#inline-attribute">attributes</a> 能让你更深入控制这个过程，这里也要小心 - 编译器会从同一个crate的恰当的地方自动地内联函数，因此不恰当地强迫它内联函数实际可能会导致性能下降。</p>
+<p>研究完整的Rust宏系统超出了本节内容，因此我们鼓励你去查阅Rust文档了解完整的细节。</p>
+<h2 id="编译系统"><a class="header" href="#编译系统">编译系统</a></h2>
+<p>大多数Rust crates使用Cargo编译 (即使这不是必须的)。这解决了传统编译系统带来的许多难题。然而，你可能希望自定义编译过程。为了实现这个目的，Cargo提供了<a href="https://doc.rust-lang.org/cargo/reference/build-scripts.html"><code>build.rs</code>脚本</a>。它们是可以根据需要与Cargo编译系统进行交互的Rust脚本。</p>
+<p>与编译脚本有关的常见用例包括:</p>
+<ul>
+<li>提供编译时信息，比如静态嵌入编译日期或者Git commit hash进你的可执行文件中</li>
+<li>根据被选择的features或者其它逻辑在编译时生成链接脚本</li>
+<li>改变Cargo的编译配置</li>
+<li>添加额外的静态链接库以进行链接</li>
+</ul>
+<p>现在还不支持post-build脚本，通常将它用于像是从编译的对象自动生生成二进制文件或者打印编译信息这类任务中。</p>
+<h3 id="交叉编译"><a class="header" href="#交叉编译">交叉编译</a></h3>
+<p>为你的编译系统使用Cargo也能简化交叉编译。在大多数例子里，告诉Cargo <code>--target thumbv6m-none-eabi</code>就行了，可以在<code>target/thumbv6m-none-eabi/debug/myapp</code>中找到一个合适的可执行文件。</p>
+<p>对于那些并不是Rust原生支持的平台，将需要自己为那个目标平台编译<code>libcore</code>。遇到这样的平台，<a href="https://github.com/japaric/xargo">Xargo</a>可以作为Cargo的替代来使用，它可以自动地为你编译<code>libcore</code>。</p>
+<h2 id="迭代器与数组访问"><a class="header" href="#迭代器与数组访问">迭代器与数组访问</a></h2>
+<p>在C中，你可能习惯于通过索引直接访问数组:</p>
+<pre><code class="language-c">int16_t arr[16];
+int i;
+for(i=0; i&lt;sizeof(arr)/sizeof(arr[0]); i++) {
+    process(arr[i]);
+}
+</code></pre>
+<p>在Rust中，这是一个反模式(anti-pattern)：索引访问可能会更慢(因为它可能需要做边界检查)且可能会阻止编译器的各种优化。这是一个重要的区别，值得再重复一遍: Rust会在手动的数组索引上进行越界检查以保障内存安全性，而C允许索引数组外的内容。</p>
+<p>可以使用迭代器来替代:</p>
+<pre><code class="language-rust ignore">let arr = [0u16; 16];
+for element in arr.iter() {
+    process(*element);
+}</code></pre>
+<p>迭代器提供了一个有强大功能的数组，在C中你不得不手动实现它，比如chaining，zipping，enumerating，找到最小或最大值，summing，等等。迭代器方法也能被链式调用，提供了可读性非常高的数据处理代码。</p>
+<p>阅读<a href="https://doc.rust-lang.org/book/ch13-02-iterators.html">Iterators in the Book</a>和<a href="https://doc.rust-lang.org/core/iter/trait.Iterator.html">Iterator documentation</a>获取更多细节。</p>
+<h2 id="引用和指针"><a class="header" href="#引用和指针">引用和指针</a></h2>
+<p>在Rust中，存在指针(被叫做 <a href="https://doc.rust-lang.org/book/ch19-01-unsafe-rust.html#dereferencing-a-raw-pointer"><em>裸指针</em></a>)但是只能在特殊的环境中被使用，因为解引用裸指针总是被认为是<code>unsafe</code>的 -- Rust通常不能保障指针背后有什么。</p>
+<p>在大多数例子里，我们使用 <em>引用</em> 来替代，由<code>&amp;</code>符号指出，或者 <em>可变引用</em>，由<code>&amp;mut</code>指出。引用与指针相似，因为它能被解引用来访问底层的数据，但是它们是Rust的所有权系统的一个关键部分: Rust将严格强迫你在任何给定时间只有一个可变引用 <em>或者</em> 对相同数据的多个不变引用。</p>
+<p>在实践中，这意味着你必须要更加小心你是否需要对数据的可变访问：在C中默认是可变的，你必须显式地使用<code>const</code>，在Rust中正好相反。</p>
+<p>某个情况下，你可能仍然要使用裸指针直接与硬件进行交互(比如，写入一个指向DMA外设寄存器中的缓存的指针)，它们也被所有的外设访问crates在底层使用，让你可以读取和写入存储映射寄存器。</p>
+<h2 id="volatile访问"><a class="header" href="#volatile访问">Volatile访问</a></h2>
+<p>在C中，某个变量可能被标记成<code>volatile</code>，向编译器指出，变量中的值在访问间可能改变。Volatile变量通常用于一个与存储映射的寄存器有关的嵌入式上下文中。</p>
+<p>在Rsut中，并不使用<code>volatile</code>标记变量，我们使用特定的方法去执行volatile访问: <a href="https://doc.rust-lang.org/core/ptr/fn.read_volatile.html"><code>core::ptr::read_volatile</code></a> 和 <a href="https://doc.rust-lang.org/core/ptr/fn.write_volatile.html"><code>core::ptr::write_volatile</code></a>。这些方法使用一个 <code>*const T</code> 或者一个 <code>*mut T</code> (上面说的 <em>裸指针</em> )，执行一个volatile读取或者写入。</p>
+<p>比如，在C中你可能这样写:</p>
+<pre><code class="language-c">volatile bool signalled = false;
+
+void ISR() {
+    // 提醒中断已经发生了
+    signalled = true;
+}
+
+void driver() {
+    while(true) {
+        // 睡眠直到信号来了
+        while(!signalled) { WFI(); }
+        // 重置信号提示符
+        signalled = false;
+        // 执行一些正在等待这个中断的任务
+        run_task();
+    }
+}
+</code></pre>
+<p>在Rust中对每个访问使用volatile方法能达到相同的效果:</p>
+<pre><code class="language-rust ignore">static mut SIGNALLED: bool = false;
+
+#[interrupt]
+fn ISR() {
+    // 提醒中断已经发生
+    // (在正在的代码中，你应该考虑一个更高级的基本类型,
+    // 比如一个原子类型)
+    unsafe { core::ptr::write_volatile(&amp;mut SIGNALLED, true) };
+}
+
+fn driver() {
+    loop {
+        // 睡眠直到信号来了
+        while unsafe { !core::ptr::read_volatile(&amp;SIGNALLED) } {}
+        // 重置信号指示符
+        unsafe { core::ptr::write_volatile(&amp;mut SIGNALLED, false) };
+        // 执行一些正在等待中断的任务
+        run_task();
+    }
+}</code></pre>
+<p>在示例代码中有些事情值得注意:</p>
+<ul>
+<li>我们可以把<code>&amp;mut SIGNALLED</code>传递给要求<code>*mut T</code>的函数中，因为<code>&amp;mut T</code>会自动转换成一个<code>*mut T</code> (对于<code>*const T</code>来说是一样的)</li>
+<li>我们需要为<code>read_volatile</code>/<code>write_volatile</code>方法使用<code>unsafe</code>块，因为它们是<code>unsafe</code>的函数。确保操作安全变成了程序员的责任：看方法的文档获得更多细节。</li>
+</ul>
+<p>在你的代码中直接使用这些函数是很少见的，因为它们通常由更高级的库封装起来为你提供服务。对于存储映射的外设，提供外设访问的crates将自动实现volatile访问，而对于并发的基本类型，存在更好的抽象可用。(看<a href="../concurrency/index.html">并发章节</a>)</p>
+<h2 id="填充和对齐类型"><a class="header" href="#填充和对齐类型">填充和对齐类型</a></h2>
+<p>在嵌入式C中，告诉编译器一个变量必须遵守某个对齐或者一个结构体必须被填充而不是对齐，是很常见的行为，通常是为了满足特定的硬件或者协议要求。</p>
+<p>在Rust中，这由一个结构体或者联合体上的<code>repr</code>属性来控制。默认的表示(representation)不保障布局，因此不应该被用于与硬件或者C互用的代码。编译器可能会对结构体成员重新排序或者插入填充，且这种行为可能在未来的Rust版本中改变。</p>
+<pre><pre class="playground"><code class="language-rust">struct Foo {
+    x: u16,
+    y: u8,
+    z: u16,
+}
+
+fn main() {
+    let v = Foo { x: 0, y: 0, z: 0 };
+    println!("{:p} {:p} {:p}", &amp;v.x, &amp;v.y, &amp;v.z);
+}
+
+// 0x7ffecb3511d0 0x7ffecb3511d4 0x7ffecb3511d2
+// 注意为了改进填充，顺序已经被变成了x, z, y</code></pre></pre>
+<p>使用<code>repr(C)</code>可以确保布局可以与C互用。</p>
+<pre><pre class="playground"><code class="language-rust">#[repr(C)]
+struct Foo {
+    x: u16,
+    y: u8,
+    z: u16,
+}
+
+fn main() {
+    let v = Foo { x: 0, y: 0, z: 0 };
+    println!("{:p} {:p} {:p}", &amp;v.x, &amp;v.y, &amp;v.z);
+}
+
+// 0x7fffd0d84c60 0x7fffd0d84c62 0x7fffd0d84c64
+// 顺序被保留了，布局将不会随着时间而改变
+// `z`是两个字节对齐，因此在`y`和`z`之间填充了一个字节。</code></pre></pre>
+<p>使用<code>repr(packed)</code>去确保表示(representation)被填充了:</p>
+<pre><pre class="playground"><code class="language-rust">#[repr(packed)]
+struct Foo {
+    x: u16,
+    y: u8,
+    z: u16,
+}
+
+fn main() {
+    let v = Foo { x: 0, y: 0, z: 0 };
+    // 引用必须总是对齐的，因此为了检查结构体字段的地址，我们使用
+    // `std::ptr::addr_of!()`去获取一个裸指针而不仅是打印`&amp;v.x`
+    let px = std::ptr::addr_of!(v.x);
+    let py = std::ptr::addr_of!(v.y);
+    let pz = std::ptr::addr_of!(v.z);
+    println!("{:p} {:p} {:p}", px, py, pz);
+}
+
+// 0x7ffd33598490 0x7ffd33598492 0x7ffd33598493
+// 在`y`和`z`没有填充被插入，因此现在`z`没有被对齐。</code></pre></pre>
+<p>注意使用<code>repr(packed)</code>也会将类型的对齐设置成<code>1</code> 。</p>
+<p>最后，为了指定一个特定的对齐，可以使用<code>repr(align(n))</code>，<code>n</code>是要对齐的字节数(必须是2的幂):</p>
+<pre><pre class="playground"><code class="language-rust">#[repr(C)]
+#[repr(align(4096))]
+struct Foo {
+    x: u16,
+    y: u8,
+    z: u16,
+}
+
+fn main() {
+    let v = Foo { x: 0, y: 0, z: 0 };
+    let u = Foo { x: 0, y: 0, z: 0 };
+    println!("{:p} {:p} {:p}", &amp;v.x, &amp;v.y, &amp;v.z);
+    println!("{:p} {:p} {:p}", &amp;u.x, &amp;u.y, &amp;u.z);
+}
+
+// 0x7ffec909a000 0x7ffec909a002 0x7ffec909a004
+// 0x7ffec909b000 0x7ffec909b002 0x7ffec909b004
+// `u`和`v`两个实例已经被放置在4096字节的对齐上。
+// 它们地址结尾处的`000`证明了这件事。</code></pre></pre>
+<p>注意我们可以结合<code>repr(C)</code>和<code>repr(align(n))</code>来获取一个对齐的c兼容的布局。不允许将<code>repr(align(n))</code>和<code>repr(packed)</code>一起使用，因为<code>repr(packed)</code>将对齐设置为<code>1</code>。也不允许一个<code>repr(packed)</code>类型包含一个<code>repr(align(n))</code>类型。</p>
+<p>关于类型布局更多的细节，参考the Rust Reference的<a href="https://doc.rust-lang.org/reference/type-layout.html">type layout</a>章节。</p>
+<h2 id="其它资源"><a class="header" href="#其它资源">其它资源</a></h2>
+<ul>
+<li>这本书中:
+<ul>
+<li><a href="../interoperability/c-with-rust.html">使用C的Rust</a></li>
+<li><a href="../interoperability/rust-with-c.html">使用Rust的C</a></li>
+</ul>
+</li>
+<li><a href="https://docs.rust-embedded.org/faq.html">The Rust Embedded FAQs</a></li>
+<li><a href="http://blahg.josefsipek.net/?p=580">Rust Pointers for C Programmers</a></li>
+<li><a href="https://github.com/diwic/reffers-rs/blob/master/docs/Pointers.md">I used to use pointers - now what?</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../design-patterns/hal/gpio.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../interoperability/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../design-patterns/hal/gpio.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../interoperability/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
